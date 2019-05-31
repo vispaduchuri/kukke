@@ -5,6 +5,7 @@ import { Layout, Row, Col, Spin, Breadcrumb, Statistic, Card } from 'antd';
 import firebase from '../config/config';
 
 import logo from './ECO/ECO1.png'
+import { Popover, Button } from 'antd';
 
 var storage = firebase.storage();
 const { Meta } = Card;
@@ -56,7 +57,7 @@ const db = firebase.firestore();
             // this.state.cardsList = cards
             //console.log(imgid)
            // this.setState({cardsList:cards}, this.getImages())
-           this.setState({cardsList:cards,imglist:imgid},this.getImages(imgid))
+           this.setState({cardsList:cards,imglist:imgid},this.getImages(imgid));
                  //console.log(this.state.imglist)
         })
     }
@@ -64,16 +65,17 @@ const db = firebase.firestore();
     getImages(imgid){
      //   console.log(imgid)   imgid is an array
         const cards = imgid
-        const imglist=[]
         
-       console.log(cards[0])
-      //  console.log(imglist)
+        const {cardsList,imglist}= this.state;
+        
+       console.log(cards)
+       console.log(imglist)
     
 
     
         
          const imagePromises = [];
-         imglist.forEach(cards=>{
+         cardsList.forEach(cards=>{
              console.log('1234')
 
             const imageRef = storage.refFromURL(`gs://prodet-ku.appspot.com/Products/${cards}/ECOHWF.png`)
@@ -100,19 +102,21 @@ const db = firebase.firestore();
     render() 
     {
 
-        const { cardsList, imageUrl,imgurl } = this.state;
+        const { cardsList, imageUrl,imgurl,imglist } = this.state;
 
         return (
 
             <div>  
                 {cardsList.map(card=>(
+                    <Popover content={card.Desc}>
                     <Card
                     hoverable
                     style={{ width: 250, margin:20 }}
-                    cover={<img alt={card.Name} src={imgurl} />}
+                    cover={<img alt={card.Name} src={imageUrl} />}
                     >
                         <Meta title={card.Name} description={card.Price} />
                     </Card>
+                    </Popover>
                 ))}
 
                 
