@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
-import { Layout, Row, Col, Spin, Breadcrumb, Statistic, Card } from 'antd';
+import { Layout, Row, Col, Spin,Carousel, Breadcrumb, Statistic, Card } from 'antd';
 
 import firebase from '../config/config';
 
 import logo from './ECO/ECO1.png'
+import { Skeleton } from 'antd';
 import { Popover, Button } from 'antd';
 
 var storage = firebase.storage();
@@ -99,22 +100,27 @@ const db = firebase.firestore();
         // })
     }
 
+
+
     render() 
     {
 
         const { cardsList, imageUrl,imgurl,imglist } = this.state;
 
         return (
-
             <div>  
+                {/* <Spin />
+                <Skeleton active /> */}
+
                 {cardsList.map(card=>(
                     <Popover content={card.Desc}>
+                        
                     <Card
                     hoverable
                     style={{ width: 250, margin:20 }}
                     cover={<img alt={card.Name} src={imageUrl} />}
                     >
-                        <Meta title={card.Name} description={card.Price} />
+                        <Meta title={card.Name} description={'Rs.' + card.Price } />
                     </Card>
                     </Popover>
                 ))}

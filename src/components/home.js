@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
-import { PageHeader, Typography } from 'antd';
+import { PageHeader,Carousel, Typography } from 'antd';
+import '../css/carousel.css';
 
 
 const { Paragraph } = Typography;
+
+
+
+
+
+
 
 class Home extends Component{
     
@@ -14,7 +21,24 @@ class Home extends Component{
        
         return(
 
+
+
 <div className="wrap">
+<Carousel autoplay>
+    <div>
+      <h3>Need Chemical Solutions For your Company?</h3>
+    </div>
+    <div>
+      <h3>Want to Save on Chemical Costs?</h3>
+    </div>
+    <div>
+      <h3>Then You have come to the right place</h3>
+    </div>
+    <div>
+      <h3>Explore our products Range and Contact us for Solutions</h3>
+      
+    </div>
+  </Carousel>
 
 <div className="extraContent">
             <img
