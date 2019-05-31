@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { Layout, Row, Col, Spin, Menu, Icon, Card, Select, Pagination } from 'antd';
+import { Layout, Row, Col, Spin, Card, Select, Pagination } from 'antd';
 import firebase from '../config/config';
 
 const { Content, Sider } = Layout;
