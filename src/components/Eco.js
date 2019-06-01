@@ -23,7 +23,7 @@ const db = firebase.firestore();
 
         this.state={
             cardsList:[],
-            imglist:[],
+            imageIds:[],
             imageUrl:logo,
             imgurl:[]
         }
@@ -33,7 +33,7 @@ const db = firebase.firestore();
     componentDidMount() {
         console.log(' I MOUNTED')
         // onSnapshot
-        this.getitems();
+        this.getItems();
         //this.getImages();
     }
     
@@ -44,49 +44,47 @@ const db = firebase.firestore();
     }
 
 
-    getitems(){
+    getItems(){
         const cards = []
-        const imgid=[]
+        const imageIds=[]
         db.collection('Products').get()
         .then(snapshot=>{
 
             snapshot.forEach(doc=>{
                 cards.push(doc.data())
-                imgid.push(doc.data().id)
+                imageIds.push(doc.data().id)
                 console.log(doc.data())
             })
             // this.state.cardsList = cards
             //console.log(imgid)
            // this.setState({cardsList:cards}, this.getImages())
-           this.setState({cardsList:cards,imglist:imgid},this.getImages(imgid));
+           console.log(cards,imageIds)
+           this.setState({cardsList:cards,imageIds:imageIds},this.getImages);
                  //console.log(this.state.imglist)
         })
     }
 
-    getImages(imgid){
-     //   console.log(imgid)   imgid is an array
-        const cards = imgid
+    getImages(){
+     
+        const {cardsList,imageIds}= this.state;
         
-        const {cardsList,imglist}= this.state;
-        
-       console.log(cards)
-       console.log(imglist)
-    
-
-    
-        
+    //    console.log(cards)
+       console.log(cardsList,imageIds)
          const imagePromises = [];
-         cardsList.forEach(cards=>{
-             console.log('1234')
-
-            const imageRef = storage.refFromURL(`gs://prodet-ku.appspot.com/Products/${cards}/ECOHWF.png`)
-            imagePromises.push(imageRef.getDownloadURL())
+         cardsList.forEach((card,i)=>{
+            //  console.log('1234')
+            console.log('Image Id',imageIds[i]);
+            const imageRef = storage.ref(`Products/${imageIds[i]}/image.png`);
+            // 'gs://prodet-ku.appspot.com/Products/hOb3za4XBz4EqfU8FUJF/image.png'
+            imagePromises.push(imageRef.getDownloadURL());
         })
 
         Promise.all(imagePromises).then(imageUrls=>{
-            imageUrls.forEach(imageUrl=>{
+            imageUrls.forEach((imageUrl,i)=>{
                 console.log(imageUrl)
+                cardsList[i].src = imageUrl; // Setting image Link retrieved from firebase storage to src property of the product
             })
+            this.setState({cardsList})
         })
 
         
@@ -118,7 +116,7 @@ const db = firebase.firestore();
                     <Card
                     hoverable
                     style={{ width: 250, margin:20 }}
-                    cover={<img alt={card.Name} src={imageUrl} />}
+                    cover={<img alt={card.Name} src={card.src} />}
                     >
                         <Meta title={card.Name} description={'Rs.' + card.Price } />
                     </Card>
