@@ -9,6 +9,7 @@ import { Skeleton } from 'antd';
 import { Popover, Button } from 'antd';
 
 
+
 var storage = firebase.storage();
 const { Meta } = Card;
 //const { Content, Sider } = Layout;
@@ -164,23 +165,28 @@ const imgSt={
                         </Carousel>
 
 
-                <div>
-                {cardsList.map((card,i)=>(
-                    
+
+
+
+         <div className="gutter-example">
+         <Row gutter={20}>
                         
+                     
+                
+                {cardsList.map((card,i)=>(
+
+                    <Col className="gutter-row" span={5}>
+                    
+                    <div className="gutter-box">
                     <Card
                     hoverable
                     style={{ width: 250, margin:20 }}
                     cover={<img alt={card.Name} src={card.src} />}
                     >
                         <Meta title={card.Name} description={'Rs.' + card.Price } style={pStyle} />
-                        
-
-
-                        
-                         
+                    
                          <input type="button" value="Click Me!" onClick={() => this.openModal(card)} />
-                         <Modal visible={this.state.visible} onOk={this.handleOk}
+                         <Modal visible={this.state.visible} onOk={this.handleOk} type= "primary"
                          onCancel={this.handleCancel} width="400" height="300"  onClickAway={() => this.closeModal()}>
                            <div>
                          <h1>Name: {Name}</h1>
@@ -189,23 +195,23 @@ const imgSt={
 
                          </div>
                          </Modal>
-                        
-
-
-
-
-                    </Card>
                     
+                    </Card>
+                    </div>
+                    </Col>
                 ))}
+
+                        
+                      
+                      </Row>
 
                 
                 
            
-                <div>
-                    <h1>Eco cards here</h1>
-                </div>
+               
             </div>
             </div>
+            
         )
     }
 }
