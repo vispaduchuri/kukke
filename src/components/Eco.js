@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 
-import { Layout, Row, Col, Spin,Carousel, Breadcrumb, Statistic, Card } from 'antd';
+import { Layout, Row, Col, Spin,Carousel, Breadcrumb, Modal, Card } from 'antd';
 
 import firebase from '../config/config';
 
-import logo from './ECO/ECO1.png'
+import logo from './ECO/logo1.png'
 import { Skeleton } from 'antd';
 import { Popover, Button } from 'antd';
+
 
 var storage = firebase.storage();
 const { Meta } = Card;
@@ -14,6 +15,15 @@ const { Meta } = Card;
 
 
 const db = firebase.firestore();
+
+const pStyle={
+    fontSize: '20px',
+};
+
+const imgSt={
+    margin:'35px'
+}
+
 
  class Eco extends Component {
 
@@ -25,7 +35,9 @@ const db = firebase.firestore();
             cardsList:[],
             imageIds:[],
             imageUrl:logo,
-            imgurl:[]
+            imgurl:[],
+            visible : false
+
         }
 
     }
@@ -41,6 +53,24 @@ const db = firebase.firestore();
     componentWillUnmount(){
         console.log(' I UNMOUNTED')
 
+    }
+
+    openModal(props) {
+        this.setState({
+            visible : true,
+            Name: props.Name,
+            Desc : props.Desc,
+            Dil : props.Dilution
+        });
+
+       console.log(props.Name)
+    }
+
+    closeModal() {
+        this.setState({
+            visible : false
+
+        });
     }
 
 
@@ -98,29 +128,74 @@ const db = firebase.firestore();
         // })
     }
 
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+    
+      handleCancel = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+
+    
 
 
     render() 
     {
 
-        const { cardsList, imageUrl,imgurl,imglist } = this.state;
+        const { cardsList, imageUrl,imgurl,imglist , Name, Desc, Dil} = this.state;
 
         return (
             <div>  
                 {/* <Spin />
                 <Skeleton active /> */}
 
-                {cardsList.map(card=>(
-                    <Popover content={card.Desc}>
+                <img src={logo} alt='Eco Organics' style={imgSt}/>
+
+
+                <Carousel autoplay>
+                            <div><h2>Eco Organics India is a leading company in hygiene care chemicals and service. </h2></div>
+                            
+                        </Carousel>
+
+
+                <div>
+                {cardsList.map((card,i)=>(
+                    
                         
                     <Card
                     hoverable
                     style={{ width: 250, margin:20 }}
                     cover={<img alt={card.Name} src={card.src} />}
                     >
-                        <Meta title={card.Name} description={'Rs.' + card.Price } />
+                        <Meta title={card.Name} description={'Rs.' + card.Price } style={pStyle} />
+                        
+
+
+                        
+                         
+                         <input type="button" value="Click Me!" onClick={() => this.openModal(card)} />
+                         <Modal visible={this.state.visible} onOk={this.handleOk}
+                         onCancel={this.handleCancel} width="400" height="300"  onClickAway={() => this.closeModal()}>
+                           <div>
+                         <h1>Name: {Name}</h1>
+                         <h2>Desc: {Desc}</h2>
+                         <h3>Dilution: {Dil}</h3>
+
+                         </div>
+                         </Modal>
+                        
+
+
+
+
                     </Card>
-                    </Popover>
+                    
                 ))}
 
                 
@@ -129,6 +204,7 @@ const db = firebase.firestore();
                 <div>
                     <h1>Eco cards here</h1>
                 </div>
+            </div>
             </div>
         )
     }

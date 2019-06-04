@@ -10,7 +10,7 @@ import Solu from './components/Solu'
 import {  Menu} from 'antd';
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
-const { Header, Footer } = Layout;
+const { Header, Footer, Content } = Layout;
 // eslint-disable-next-line no-lone-blocks
 {/*const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -56,16 +56,13 @@ class App extends Component {
     </Header>
     </Layout>
 
-   
-    
+  
       {currentPage === 0 ? <Home />: null}
       {currentPage === 1 ? <About />: null}
       {currentPage === 2 ? <Eco />: null}
     {currentPage === 3 ? <Solu />: null}
     {currentPage === 4 ? <Contact/>: null}
 
-   
-    
          
 
       <Layout>  

@@ -26,16 +26,16 @@ class Home extends Component{
 <div className="wrap">
 <Carousel autoplay>
     <div>
-      <h3>Need Chemical Solutions For your Company?</h3>
+      <h2>Need Chemical Solutions For your Company ?</h2>
     </div>
     <div>
-      <h3>Want to Save on Chemical Costs?</h3>
+      <h2>Want to Save on Chemical Costs ?</h2>
     </div>
     <div>
-      <h3>Then You have come to the right place</h3>
+      <h2>Then You have come to the right place</h2>
     </div>
     <div>
-      <h3>Explore our products Range and Contact us for Solutions</h3>
+      <h2>Explore our Range of products and Contact us.</h2>
       
     </div>
   </Carousel>
